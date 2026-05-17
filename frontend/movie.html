@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Letterflop — Film</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body class="bg-neutral-950 text-white min-h-screen" style="font-family: Inter, sans-serif;">
+
+  <nav class="bg-neutral-900 border-b border-neutral-800 flex items-center justify-between px-8 py-4">
+    <a href="/" class="text-red-600 font-bold text-xl no-underline">🎬 Letterflop</a>
+    <div class="flex gap-6">
+      <a href="/" class="text-neutral-300 text-sm no-underline">Rechercher</a>
+      <a href="/history.html" class="text-neutral-300 text-sm no-underline">Mon historique</a>
+    </div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto px-8 py-8">
+    <p id="loading" class="text-neutral-500">Chargement...</p>
+    <p id="error"   class="text-red-500 hidden">Film introuvable.</p>
+
+    <div id="movie-content" class="hidden">
+
+      <div class="flex gap-8 mb-12">
+        <div id="poster-col" class="shrink-0"></div>
+        <div id="info-col" class="flex-1"></div>
+      </div>
+
+      <div id="log-form-container"></div>
+
+      <div id="logs-section">
+        <h2 id="logs-title" class="text-lg font-semibold mb-4 text-neutral-300"></h2>
+        <div id="logs-list"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script type="module" src="/src/pages/movie.ts"></script>
+</body>
+</html>

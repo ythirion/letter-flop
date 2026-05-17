@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Letterflop — Historique</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body class="bg-neutral-950 text-white min-h-screen" style="font-family: Inter, sans-serif;">
+
+  <nav class="bg-neutral-900 border-b border-neutral-800 flex items-center justify-between px-8 py-4">
+    <a href="/" class="text-red-600 font-bold text-xl no-underline">🎬 Letterflop</a>
+    <div class="flex gap-6">
+      <a href="/" class="text-neutral-300 text-sm no-underline">Rechercher</a>
+      <a href="/history.html" class="text-neutral-300 text-sm no-underline">Mon historique</a>
+    </div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto px-8 py-8">
+    <p id="loading" class="text-neutral-500">Chargement...</p>
+
+    <div id="history-content" class="hidden">
+      <h1 class="text-2xl font-bold mb-2">Mon historique</h1>
+      <p id="total-count" class="text-neutral-500 mb-6"></p>
+      <div id="logs-list" class="flex flex-col gap-4"></div>
+      <div id="pagination" class="hidden flex items-center justify-center gap-4 mt-8">
+        <button id="prev-btn" class="bg-neutral-800 text-white px-5 py-2.5 rounded-lg border-none cursor-pointer disabled:opacity-40">← Précédent</button>
+        <span id="page-info" class="text-sm text-neutral-500"></span>
+        <button id="next-btn" class="bg-neutral-800 text-white px-5 py-2.5 rounded-lg border-none cursor-pointer disabled:opacity-40">Suivant →</button>
+      </div>
+    </div>
+
+    <div id="empty-state" class="hidden text-center mt-20">
+      <p class="text-xl text-neutral-500 mb-4">Logge ton premier film</p>
+      <a href="/" class="text-red-600 no-underline">Rechercher un film →</a>
+    </div>
+  </main>
+
+  <script type="module" src="/src/pages/history.ts"></script>
+</body>
+</html>

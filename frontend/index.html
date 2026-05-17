@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Letterflop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body class="bg-neutral-950 text-white min-h-screen" style="font-family: Inter, sans-serif;">
+
+  <nav class="bg-neutral-900 border-b border-neutral-800 flex items-center justify-between px-8 py-4">
+    <a href="/" class="text-red-600 font-bold text-xl no-underline">🎬 Letterflop</a>
+    <div class="flex gap-6">
+      <a href="/" class="text-neutral-300 text-sm no-underline">Rechercher</a>
+      <a href="/history.html" class="text-neutral-300 text-sm no-underline">Mon historique</a>
+    </div>
+  </nav>
+
+  <main class="max-w-6xl mx-auto px-8 py-8">
+    <h1 class="text-2xl font-bold mb-6">Rechercher un film</h1>
+
+    <form id="search-form" class="flex gap-3 mb-8">
+      <input
+        id="search-input"
+        type="text"
+        placeholder="Titre du film..."
+        class="flex-1 bg-neutral-900 border border-neutral-700 text-white rounded-lg px-4 py-3 focus:outline-none"
+      />
+      <button
+        type="submit"
+        id="search-btn"
+        class="bg-red-600 text-white px-6 py-3 rounded-lg border-none cursor-pointer font-medium"
+      >
+        Rechercher
+      </button>
+    </form>
+
+    <p id="error-msg"  class="text-red-500 mb-4 hidden"></p>
+    <p id="empty-msg"  class="text-neutral-500 text-center mt-12 text-lg hidden"></p>
+
+    <div id="results-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5"></div>
+  </main>
+
+  <script type="module" src="/src/pages/search.ts"></script>
+</body>
+</html>
