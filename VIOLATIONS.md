@@ -135,10 +135,10 @@ public MovieDetailDto getMovieDetail(Integer tmdbId) { ... }
 
 ## Backend — Qualité du code
 
-### CODE-1 — Pagination en Java après chargement total depuis la DB
-**Fichier** : `backend/src/main/java/com/yot/letterflop/service/MovieLogService.java`, méthode `getAllLogs()`, lignes 22–48  
+### CODE-1 — Double appel DB + double tri Stream pour une même requête de liste
+**Fichier** : `backend/src/main/java/com/yot/letterflop/service/MovieLogService.java`, méthode `getAllLogs()`  
 **Critère RGESN** : 4.9, 4.10  
-**Impact** : Tous les logs chargés en mémoire quel que soit le total, puis découpés. + `getTotalCount()` fait un second full table scan → **2 full table scans** par requête de liste.  
+**Impact** : `getAllLogs()` appelle `repository.findAllOrderByWatchedAtDesc()` **deux fois** (une pour calculer les bornes de pagination, une "pour être sûr d'avoir des données fraîches") et trie le résultat avec `.sorted()` **deux fois** alors que la requête SQL ordonne déjà. Le pattern `.collect(Collectors.toList()).subList(...).stream()` recrée un stream depuis une liste intermédiaire inutile. En combinaison avec `getTotalCount()` qui fait un troisième full table scan (`findAll().size()`), chaque requête de liste provoque **3 full table scans** et **2 tris en mémoire**.  
 **Correction** :
 ```java
 Page<MovieLog> findAllByOrderByWatchedAtDescCreatedAtDesc(Pageable pageable);

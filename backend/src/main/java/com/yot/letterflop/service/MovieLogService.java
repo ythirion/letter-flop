@@ -26,7 +26,7 @@ public class MovieLogService {
         List<MovieLog> sorted = allLogs.stream()
                 .sorted(Comparator.comparing(MovieLog::getWatchedAt).reversed()
                         .thenComparing(Comparator.comparing(MovieLog::getCreatedAt).reversed()))
-                .toList();
+                .collect(Collectors.toList());
 
         int start = page * size;
         int end = Math.min(start + size, sorted.size());
@@ -35,7 +35,11 @@ public class MovieLogService {
             return new ArrayList<>();
         }
 
-        return sorted.subList(start, end)
+        return repository.findAllOrderByWatchedAtDesc().stream()
+                .sorted(Comparator.comparing(MovieLog::getWatchedAt).reversed()
+                        .thenComparing(Comparator.comparing(MovieLog::getCreatedAt).reversed()))
+                .toList()
+                .subList(start, Math.min(start + size, end))
                 .stream()
                 .map(log -> {
                     MovieLogDto dto = new MovieLogDto();
