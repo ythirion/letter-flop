@@ -1,0 +1,26 @@
+scripts/start-backend.sh
+  s_a49b085f738d61::t_1f23845079b44c 1-5
+  s_a49b085f738d61::t_7abbc2d54ed554 6-19
+README.md
+  s_a49b085f738d61::t_5944d86f31a20d 47
+  s_a49b085f738d61::t_11e8ad0b46a652 59-90
+  s_a49b085f738d61::t_10315f3a3fae8a 16-17,33-46,48-57
+scripts/benchmark.sh
+  s_a49b085f738d61::t_98e0786d94d5da 1-228
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "0ca300bdbecc022404ae068d5e7772e76aadc752",
+  "prompts": {},
+  "sessions": {
+    "s_a49b085f738d61": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "479dc3da-f220-410c-89cb-9861ecb1a198",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Yoan Thirion <yoan.thirion@gmail.com>"
+    }
+  }
+}
