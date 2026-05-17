@@ -13,6 +13,8 @@
 
 ## Lancer l'application
 
+### Stack complète (Docker)
+
 ```bash
 # Premier lancement (ou après un changement de Dockerfile)
 docker compose build --no-cache
@@ -27,6 +29,64 @@ docker compose up --build
 - Swagger UI : http://localhost:8080/swagger-ui.html
 - OpenAPI JSON : http://localhost:8080/v3/api-docs
 - Base de données : localhost:5432
+
+### Backend seul (développement)
+
+Prérequis : Java 25 et Maven installés localement.
+
+**1. Démarrer uniquement la base de données**
+
+```bash
+docker compose up db -d
+```
+
+**2. Lancer le backend**
+
+```bash
+cd backend
+export $(grep -v '^#' ../.env | xargs) && mvn spring-boot:run
+```
+
+- Backend API : http://localhost:8080
+- Swagger UI : http://localhost:8080/swagger-ui.html
+
+**Arrêter la base de données**
+
+```bash
+docker compose stop db
+```
+
+### Benchmark API
+
+Prérequis : `ab` (Apache Benchmark) et l'API démarrée.
+
+```bash
+# macOS
+brew install httpd
+
+# Debian/Ubuntu
+sudo apt install apache2-utils
+```
+
+```bash
+./scripts/benchmark.sh
+```
+
+Le rapport est généré dans `benchmark-YYYYMMDD-HHMMSS.md` à la racine du projet.
+
+Variables d'environnement disponibles :
+
+| Variable | Défaut | Description |
+|---|---|---|
+| `API_HOST` | `http://localhost:8080` | URL de l'API |
+| `AB_REQUESTS` | `100` | Nombre de requêtes par route |
+| `AB_CONCURRENCY` | `10` | Requêtes simultanées |
+| `TMDB_MOVIE_ID` | `27205` | ID TMDB utilisé pour les routes film |
+| `SEARCH_QUERY` | `inception` | Requête de recherche |
+
+```bash
+AB_REQUESTS=200 AB_CONCURRENCY=20 ./scripts/benchmark.sh
+```
 
 ---
 
