@@ -1,0 +1,16 @@
+frontend/Dockerfile
+  h_0a88d9aba8622a 1,4,6,8-10
+backend/Dockerfile
+  h_0a88d9aba8622a 1,3-6,8-10,12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "c2cf95c0beb58998e56044b301f3b62af9282ef0",
+  "prompts": {},
+  "humans": {
+    "h_0a88d9aba8622a": {
+      "author": "Yoan Thirion <yoan.thirion@gmail.com>"
+    }
+  }
+}
