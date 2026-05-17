@@ -11,6 +11,18 @@
 | Frontend        | Vanilla TypeScript + Tailwind CSS (Vite) |
 | Infra           | Docker / docker-compose                  |
 
+## Configuration
+
+Copier le fichier d'exemple et renseigner ta clé TMDB :
+
+```bash
+cp .env.example .env
+```
+
+Éditer `.env` et remplacer `your_tmdb_api_key_here` par ta clé (disponible sur [themoviedb.org](https://www.themoviedb.org/) → Settings → API).
+
+---
+
 ## Lancer l'application
 
 ### Stack complète (Docker)
