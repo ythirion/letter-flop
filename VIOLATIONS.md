@@ -89,11 +89,19 @@ List<MovieLogSummary> findAllProjectedBy();
 
 ## Backend — Appels réseau & Cache
 
-### NET-1 — Problème N+1 : un appel HTTP par film dans la recherche
-**Fichier** : `backend/src/main/java/com/yot/letterflop/service/TmdbService.java`, méthode `searchMovies()`, ligne 43  
+### NET-1 — Problème N+1 aggravé : `getMovieDetail()` appelé pour chaque résultat de recherche
+**Fichier** : `backend/src/main/java/com/yot/letterflop/service/TmdbService.java`, méthode `searchMovies()`  
 **Critère RGESN** : 4.7 — Limiter les appels réseau  
-**Impact** : Une recherche retournant 20 films déclenche **21 appels HTTP** vers TMDB (1 search + 20 × `/credits`). Chaque appel supplémentaire mobilise un thread et rallonge le temps de réponse.  
-**Correction** : Utiliser `append_to_response=credits` sur l'endpoint `/search/movie`, ou ne récupérer le réalisateur que sur la fiche détail.
+**Impact** : Une recherche retournant 20 films déclenche **41 appels HTTP** vers TMDB (1 search + 20 × `/movie/{id}?append_to_response=credits`). Chaque appel rapporte synopsis, runtime, genres, crédits complets — des données que le frontend n'affiche jamais dans la grille de résultats.  
+**Correction** : Utiliser `append_to_response=credits` directement sur `/search/movie`, ou ne récupérer le réalisateur que sur la fiche détail.
+
+---
+
+### NET-1b — Over-fetching : données complètes envoyées au frontend qui n'en affiche qu'une fraction
+**Fichiers** : `backend/src/main/java/com/yot/letterflop/dto/MovieSearchResultDto.java`, `frontend/src/pages/search.ts`  
+**Critère RGESN** : 4.7, 4.9  
+**Impact** : `MovieSearchResultDto` expose 12 champs (synopsis, runtime, genres, voteAverage, originalTitle, originalLanguage, popularity…). La grille de recherche n'en affiche que 4 (titre, année, affiche, réalisateur). Les données superflues transitent inutilement sur le réseau à chaque recherche.  
+**Correction** : Limiter `MovieSearchResultDto` aux champs réellement affichés, ou utiliser des projections GraphQL/sparse fieldsets.
 
 ---
 

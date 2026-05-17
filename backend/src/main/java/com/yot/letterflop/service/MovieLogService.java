@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class MovieLogService {
-
     private final MovieLogRepository repository;
 
     public MovieLogService(MovieLogRepository repository) {

@@ -38,21 +38,26 @@ public class TmdbService {
         }
 
         for (Map<String, Object> result : results) {
+            Integer id = (Integer) result.get("id");
+            MovieDetailDto detail = getMovieDetail(id);
+
             MovieSearchResultDto dto = new MovieSearchResultDto();
-            dto.setId((Integer) result.get("id"));
-            dto.setTitle((String) result.get("title"));
+            dto.setId(detail.getId());
+            dto.setTitle(detail.getTitle());
+            dto.setYear(detail.getYear());
+            dto.setPosterPath(detail.getPosterPath());
+            dto.setDirector(detail.getDirector());
+            dto.setSynopsis(detail.getSynopsis());
+            dto.setRuntime(detail.getRuntime());
+            dto.setGenres(detail.getGenres());
 
-            String releaseDate = (String) result.get("release_date");
-            if (releaseDate != null && !releaseDate.isEmpty()) {
-                dto.setYear(Integer.parseInt(releaseDate.substring(0, 4)));
-            }
+            Object vote = result.get("vote_average");
+            if (vote instanceof Number n) dto.setVoteAverage(n.doubleValue());
+            dto.setOriginalTitle((String) result.get("original_title"));
+            dto.setOriginalLanguage((String) result.get("original_language"));
+            Object pop = result.get("popularity");
+            if (pop instanceof Number n) dto.setPopularity(n.doubleValue());
 
-            String posterPath = (String) result.get("poster_path");
-            if (posterPath != null) {
-                dto.setPosterPath("https://image.tmdb.org/t/p/original" + posterPath);
-            }
-
-            dto.setDirector(fetchDirector(dto.getId()));
             movies.add(dto);
         }
 
