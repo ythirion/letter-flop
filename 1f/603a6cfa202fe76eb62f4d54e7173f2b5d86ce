@@ -1,0 +1,29 @@
+VIOLATIONS.md
+  s_a49b085f738d61::t_e478710b7d3db9 92-93,95-96
+  s_a49b085f738d61::t_14a1c498a46ee9 100-104
+backend/src/main/java/com/yot/letterflop/service/TmdbService.java
+  s_a49b085f738d61::t_c4ec22d3853f6f 41-42,44-59
+backend/src/main/java/com/yot/letterflop/dto/MovieSearchResultDto.java
+  s_a49b085f738d61::t_6721c98671c43a 4,13-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "1f603a6cfa202fe76eb62f4d54e7173f2b5d86ce",
+  "prompts": {},
+  "humans": {
+    "h_0a88d9aba8622a": {
+      "author": "Yoan Thirion <yoan.thirion@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_a49b085f738d61": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "479dc3da-f220-410c-89cb-9861ecb1a198",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Yoan Thirion <yoan.thirion@gmail.com>"
+    }
+  }
+}
