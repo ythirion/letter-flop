@@ -1,0 +1,27 @@
+backend/src/main/java/com/yot/letterflop/service/MovieLogService.java
+  h_0a88d9aba8622a 38,42
+  s_a49b085f738d61::t_8b498732bba023 29,39-41
+VIOLATIONS.md
+  s_a49b085f738d61::t_ace250882dbdf0 138-139,141
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "fd37584fbe8cb7610c04a4f8d856f31bf87d8a72",
+  "prompts": {},
+  "humans": {
+    "h_0a88d9aba8622a": {
+      "author": "Yoan Thirion <yoan.thirion@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_a49b085f738d61": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "479dc3da-f220-410c-89cb-9861ecb1a198",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Yoan Thirion <yoan.thirion@gmail.com>"
+    }
+  }
+}
