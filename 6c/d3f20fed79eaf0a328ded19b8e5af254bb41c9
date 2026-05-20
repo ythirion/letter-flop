@@ -1,0 +1,14 @@
+VIOLATIONS.md
+  h_0a88d9aba8622a 263-357
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.11",
+  "base_commit_sha": "6cd3f20fed79eaf0a328ded19b8e5af254bb41c9",
+  "prompts": {},
+  "humans": {
+    "h_0a88d9aba8622a": {
+      "author": "Yoan Thirion <yoan.thirion@gmail.com>"
+    }
+  }
+}
