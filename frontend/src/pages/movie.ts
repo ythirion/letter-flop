@@ -103,11 +103,7 @@ function buildStarsHtml(rating: number): string {
   }).join('');
 }
 
-let ratingValue: number | null = null;
-
 function showLogForm(existingLog: MovieLog | null): void {
-  ratingValue = existingLog?.rating ?? null;
-
   formContainer.innerHTML = `
     <div class="bg-neutral-900 rounded-lg p-6 mb-6 border border-neutral-800">
       <h3 class="text-lg font-semibold mb-5">${existingLog ? 'Modifier le log' : 'Logger ce film'}</h3>
@@ -115,9 +111,19 @@ function showLogForm(existingLog: MovieLog | null): void {
       <form id="log-form" class="flex flex-col gap-4">
 
         <div class="flex flex-col gap-2">
-          <label class="text-sm text-neutral-300 font-medium">Note *</label>
-          <!-- Mauvaise pratique : notation uniquement à la souris, pas de clavier -->
-          <div id="star-input" class="flex items-center gap-0.5"></div>
+          <fieldset class="flex gap-1 border-none p-0 m-0">
+            <legend class="text-sm text-neutral-300 font-medium mb-2">Note *</legend>
+            <input type="radio" id="s1" name="rating" value="1" class="sr-only peer/s1" ${existingLog?.rating === 1 ? 'checked' : ''} />
+            <label for="s1" title="1 étoile" class="text-2xl cursor-pointer text-neutral-600 peer-checked/s1:text-yellow-400">★</label>
+            <input type="radio" id="s2" name="rating" value="2" class="sr-only peer/s2" ${existingLog?.rating === 2 ? 'checked' : ''} />
+            <label for="s2" title="2 étoiles" class="text-2xl cursor-pointer text-neutral-600 peer-checked/s2:text-yellow-400">★</label>
+            <input type="radio" id="s3" name="rating" value="3" class="sr-only peer/s3" ${existingLog?.rating === 3 ? 'checked' : ''} />
+            <label for="s3" title="3 étoiles" class="text-2xl cursor-pointer text-neutral-600 peer-checked/s3:text-yellow-400">★</label>
+            <input type="radio" id="s4" name="rating" value="4" class="sr-only peer/s4" ${existingLog?.rating === 4 ? 'checked' : ''} />
+            <label for="s4" title="4 étoiles" class="text-2xl cursor-pointer text-neutral-600 peer-checked/s4:text-yellow-400">★</label>
+            <input type="radio" id="s5" name="rating" value="5" class="sr-only peer/s5" ${existingLog?.rating === 5 ? 'checked' : ''} />
+            <label for="s5" title="5 étoiles" class="text-2xl cursor-pointer text-neutral-600 peer-checked/s5:text-yellow-400">★</label>
+          </fieldset>
         </div>
 
         <div class="flex flex-col gap-2">
@@ -156,12 +162,6 @@ function showLogForm(existingLog: MovieLog | null): void {
     </div>
   `;
 
-  attachStarInput(
-    document.getElementById('star-input') as HTMLDivElement,
-    existingLog?.rating ?? null,
-    (r) => { ratingValue = r; },
-  );
-
   const commentEl   = document.getElementById('comment') as HTMLTextAreaElement;
   const charCountEl = document.getElementById('char-count') as HTMLSpanElement;
   charCountEl.textContent = `${commentEl.value.length}/500`;
@@ -180,11 +180,13 @@ function showLogForm(existingLog: MovieLog | null): void {
     const submitBtn  = document.getElementById('submit-btn') as HTMLButtonElement;
     const successMsg = document.getElementById('form-success') as HTMLParagraphElement;
 
-    if (ratingValue === null) {
+    const ratingInput = logForm.querySelector<HTMLInputElement>('input[name="rating"]:checked');
+    if (!ratingInput) {
       formError.textContent = 'La note est obligatoire';
       formError.classList.remove('hidden');
       return;
     }
+    const rating = parseInt(ratingInput.value);
 
     const watchedAt = (document.getElementById('watched-at') as HTMLInputElement).value;
     const comment   = commentEl.value;
@@ -195,7 +197,7 @@ function showLogForm(existingLog: MovieLog | null): void {
     try {
       let saved: MovieLog;
       if (existingLog) {
-        saved = await updateLog(existingLog.id, { rating: ratingValue, watchedAt, comment });
+        saved = await updateLog(existingLog.id, { rating, watchedAt, comment });
         currentLogs = currentLogs.map(l => l.id === saved.id ? saved : l);
       } else {
         saved = await createLog({
@@ -205,7 +207,7 @@ function showLogForm(existingLog: MovieLog | null): void {
           posterPath: currentMovie.posterPath,
           director:   currentMovie.director,
           synopsis:   currentMovie.synopsis,
-          rating:     ratingValue,
+          rating,
           watchedAt,
           comment,
         });
@@ -225,55 +227,6 @@ function showLogForm(existingLog: MovieLog | null): void {
   });
 }
 
-function attachStarInput(
-  container: HTMLDivElement,
-  initial: number | null,
-  onRate: (r: number) => void,
-): void {
-  let value = initial;
-  const spans: HTMLSpanElement[] = [];
-
-  const update = (hovered: number | null): void => {
-    const display = hovered ?? value ?? 0;
-    spans.forEach((s, i) => {
-      s.style.color = display >= i + 1 ? '#f5c518' : '#404040';
-    });
-  };
-
-  for (let i = 1; i <= 5; i++) {
-    const span = document.createElement('span');
-    span.textContent = '★';
-    span.className = 'text-2xl cursor-pointer transition-colors select-none';
-    span.style.color = (value ?? 0) >= i ? '#f5c518' : '#404040';
-
-    // Mauvaise pratique : événements souris uniquement, pas de clavier
-    span.addEventListener('mouseenter', () => update(i));
-    span.addEventListener('mouseleave', () => update(null));
-    span.addEventListener('click', () => {
-      value = i;
-      onRate(i);
-      update(null);
-      const lbl = container.querySelector<HTMLSpanElement>('.rating-label');
-      if (lbl) lbl.textContent = `${value}/5`;
-      else {
-        const label = document.createElement('span');
-        label.className = 'rating-label text-sm text-neutral-500 ml-2';
-        label.textContent = `${value}/5`;
-        container.appendChild(label);
-      }
-    });
-
-    spans.push(span);
-    container.appendChild(span);
-  }
-
-  if (value !== null) {
-    const label = document.createElement('span');
-    label.className = 'rating-label text-sm text-neutral-500 ml-2';
-    label.textContent = `${value}/5`;
-    container.appendChild(label);
-  }
-}
 
 async function handleDelete(logId: number): Promise<void> {
   if (!window.confirm('Supprimer ce log ?')) return;

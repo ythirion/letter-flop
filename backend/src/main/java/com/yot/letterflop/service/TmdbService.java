@@ -5,6 +5,7 @@ import com.yot.letterflop.dto.MovieSearchResultDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,11 @@ public class TmdbService {
 
     @SuppressWarnings("unchecked")
     public List<MovieSearchResultDto> searchMovies(String query) {
-        String url = baseUrl + "/search/movie?api_key=" + apiKey + "&query=" + query + "&language=fr-FR";
+        String url = UriComponentsBuilder.fromHttpUrl(baseUrl + "/search/movie")
+                .queryParam("api_key", apiKey)
+                .queryParam("query", query)
+                .queryParam("language", "fr-FR")
+                .build().toUriString();
 
         Map<String, Object> response = restTemplate.getForObject(url, Map.class);
         List<Map<String, Object>> results = (List<Map<String, Object>>) response.get("results");
