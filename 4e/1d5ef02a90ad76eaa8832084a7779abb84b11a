@@ -1,0 +1,38 @@
+backend/pom.xml
+  s_a01855da583376::t_30238a0cdf377e 48-50
+frontend/src/pages/movie.ts
+  s_a01855da583376::t_72857c1ee0e324 114-126
+  s_a01855da583376::t_126ba299d1b795 183-184,189,200,210
+frontend/movie.html
+  s_a01855da583376::t_2e502fdc06fc3f 9
+frontend/history.html
+  s_a01855da583376::t_426b3e615fa4c0 9
+backend/src/main/java/com/yot/letterflop/config/RestTemplateConfig.java
+  s_a01855da583376::t_dbae6bfe1c1b9b 5,13
+frontend/index.html
+  s_a01855da583376::t_ec2bddb960efdb 9
+backend/src/main/java/com/yot/letterflop/service/TmdbService.java
+  s_a01855da583376::t_19c20695350383 8
+  s_a01855da583376::t_745314c2a77854 31-35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.11",
+  "base_commit_sha": "4e1d5ef02a90ad76eaa8832084a7779abb84b11a",
+  "prompts": {},
+  "humans": {
+    "h_0a88d9aba8622a": {
+      "author": "Yoan Thirion <yoan.thirion@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_a01855da583376": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e22daf52-7c52-4961-a425-ca4f0b9cffd0",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Yoan Thirion <yoan.thirion@gmail.com>"
+    }
+  }
+}
