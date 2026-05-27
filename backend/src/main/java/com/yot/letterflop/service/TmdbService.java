@@ -50,7 +50,8 @@ public class TmdbService {
             dto.setId(detail.getId());
             dto.setTitle(detail.getTitle());
             dto.setYear(detail.getYear());
-            dto.setPosterPath(detail.getPosterPath());
+            String rawPoster = (String) result.get("poster_path");
+            dto.setPosterPath(rawPoster != null ? "https://image.tmdb.org/t/p/w185" + rawPoster : null);
             dto.setDirector(detail.getDirector());
             dto.setSynopsis(detail.getSynopsis());
             dto.setRuntime(detail.getRuntime());
@@ -86,7 +87,7 @@ public class TmdbService {
 
         String posterPath = (String) response.get("poster_path");
         if (posterPath != null) {
-            dto.setPosterPath("https://image.tmdb.org/t/p/original" + posterPath);
+            dto.setPosterPath("https://image.tmdb.org/t/p/w342" + posterPath);
         }
 
         dto.setSynopsis((String) response.get("overview"));

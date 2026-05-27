@@ -16,12 +16,10 @@ let currentPage = 0;
 let totalLogs = 0;
 
 async function loadPage(page: number): Promise<void> {
-  // Mauvaise pratique : appel API à chaque changement de page,
-  // on charge 1000 logs depuis le serveur pour n'en afficher que 6.
-  const data = await getLogs(0, 1000);
-  const allLogs = data.content;
+  const data = await getLogs(page, PAGE_SIZE);
+  const slice = data.content;
 
-  totalLogs = allLogs.length;
+  totalLogs = data.totalElements;
 
   if (totalLogs === 0) {
     loadingEl.classList.add('hidden');
@@ -29,9 +27,7 @@ async function loadPage(page: number): Promise<void> {
     return;
   }
 
-  // Mauvaise pratique : filtrage/découpage côté client après avoir tout téléchargé
-  const slice = allLogs.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
-  const totalPages = Math.ceil(totalLogs / PAGE_SIZE);
+  const totalPages = data.totalPages;
 
   updateTotal();
   renderSlice(slice);

@@ -47,7 +47,7 @@ function renderResults(movies: MovieSearchResult[], query: string): void {
       data-id="${movie.id}"
     >
       ${movie.posterPath
-        ? `<img src="${movie.posterPath}" alt="" class="w-full object-cover" style="aspect-ratio:2/3">`
+        ? `<img src="${movie.posterPath}" alt="" loading="lazy" class="w-full object-cover" style="aspect-ratio:2/3">`
         : `<div class="bg-neutral-800 flex items-center justify-center text-neutral-600 text-sm" style="aspect-ratio:2/3">Pas d'affiche</div>`
       }
       <div class="p-3">

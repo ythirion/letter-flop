@@ -29,7 +29,7 @@ cp .env.example .env
 
 ```bash
 # Premier lancement (ou après un changement de Dockerfile)
-docker compose build --no-cache
+docker compose build --no-cache 
 docker compose up
 
 # Lancements suivants
