@@ -16,6 +16,12 @@ CREATE TABLE IF NOT EXISTS movie_logs (
     created_at  TIMESTAMP DEFAULT NOW()
 );
 
+CREATE INDEX IF NOT EXISTS idx_movie_logs_tmdb_id
+    ON movie_logs(tmdb_id);
+
+CREATE INDEX IF NOT EXISTS idx_movie_logs_watched_at
+    ON movie_logs(watched_at DESC, created_at DESC);
+
 -- =============================================================
 -- Données de démonstration (~330 visionnages)
 -- =============================================================
@@ -88,7 +94,7 @@ SELECT
   f.tmdb_id,
   f.title,
   f.year,
-  'https://image.tmdb.org/t/p/original' || f.poster,
+  f.poster,
   f.director,
   f.synopsis,
   (SELECT r FROM ratings WHERE pos = ((f.tmdb_id * 7 + gs.n * 13) % 12)),
@@ -99,14 +105,14 @@ CROSS JOIN generate_series(0, 7) AS gs(n);
 
 -- Visionnages supplémentaires explicites pour les films les plus aimés
 INSERT INTO movie_logs (tmdb_id, title, year, poster_path, director, synopsis, rating, watched_at, comment) VALUES
-  (550,    'Fight Club',        1999, 'https://image.tmdb.org/t/p/original/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg', 'David Fincher',          'Un employé de bureau insomniaque et un vendeur de savon fondent un club de combat clandestin.', 5.0, '2024-11-10', 'Encore meilleur en connaissant la fin.'),
-  (550,    'Fight Club',        1999, 'https://image.tmdb.org/t/p/original/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg', 'David Fincher',          'Un employé de bureau insomniaque et un vendeur de savon fondent un club de combat clandestin.', 4.5, '2023-06-14', 'Toujours aussi percutant.'),
-  (155,    'The Dark Knight',   2008, 'https://image.tmdb.org/t/p/original/qJ2tW6WMUDux911r6m7haRef0WH.jpg', 'Christopher Nolan',      'Batman affronte le Joker, un criminel anarchiste qui sème la terreur à Gotham.',             5.0, '2024-08-20', 'Heath Ledger est irremplaçable.'),
-  (155,    'The Dark Knight',   2008, 'https://image.tmdb.org/t/p/original/qJ2tW6WMUDux911r6m7haRef0WH.jpg', 'Christopher Nolan',      'Batman affronte le Joker, un criminel anarchiste qui sème la terreur à Gotham.',             5.0, '2022-12-01', NULL),
-  (680,    'Pulp Fiction',      1994, 'https://image.tmdb.org/t/p/original/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg', 'Quentin Tarantino',      'Les histoires entrelacées de criminels et de gangsters à Los Angeles.',                     5.0, '2025-01-15', 'Le meilleur Tarantino.'),
-  (27205,  'Inception',         2010, 'https://image.tmdb.org/t/p/original/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg', 'Christopher Nolan',      'Un voleur qui s''introduit dans les rêves se voit offrir une chance de rédemption.',         4.5, '2024-03-22', 'La toupie tourne encore dans ma tête.'),
-  (278,    'Les Évadés',        1994, 'https://image.tmdb.org/t/p/original/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg', 'Frank Darabont',         'Deux hommes se lient d''amitié sur plusieurs années dans une prison.',                      5.0, '2023-11-05', 'Le meilleur film de tous les temps ?'),
-  (496243, 'Parasite',          2019, 'https://image.tmdb.org/t/p/original/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg', 'Bong Joon-ho',           'Une famille pauvre s''infiltre progressivement dans la vie d''une famille riche.',            5.0, '2024-05-18', 'La cave m''a scotché.'),
-  (13,     'Forrest Gump',      1994, 'https://image.tmdb.org/t/p/original/arw2vcBveWOVZr6pxd9XTd1TdQa.jpg', 'Robert Zemeckis',        'La vie extraordinaire d''un homme ordinaire du Sud des États-Unis.',                       4.0, '2024-10-22', NULL),
-  (19404,  'DDLJ',              1995, 'https://image.tmdb.org/t/p/original/2CAL2433ZeIihfX1Hb2139CX0pW.jpg', 'Aditya Chopra',          'Deux Indiens de la diaspora tombent amoureux lors d''un voyage en Europe.',                  3.5, '2024-09-05', 'Premier Bollywood que je regarde !'),
-  (238,    'Le Parrain',        1972, 'https://image.tmdb.org/t/p/original/3bhkrj58Vtu7enYsLegHnDmni6k.jpg', 'Francis Ford Coppola',   'Le patriarche d''une famille mafieuse transfère son empire à son fils réticent.',           4.5, '2024-07-01', NULL);
+  (550,    'Fight Club',        1999, '/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg', 'David Fincher',          'Un employé de bureau insomniaque et un vendeur de savon fondent un club de combat clandestin.', 5.0, '2024-11-10', 'Encore meilleur en connaissant la fin.'),
+  (550,    'Fight Club',        1999, '/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg', 'David Fincher',          'Un employé de bureau insomniaque et un vendeur de savon fondent un club de combat clandestin.', 4.5, '2023-06-14', 'Toujours aussi percutant.'),
+  (155,    'The Dark Knight',   2008, '/qJ2tW6WMUDux911r6m7haRef0WH.jpg', 'Christopher Nolan',      'Batman affronte le Joker, un criminel anarchiste qui sème la terreur à Gotham.',             5.0, '2024-08-20', 'Heath Ledger est irremplaçable.'),
+  (155,    'The Dark Knight',   2008, '/qJ2tW6WMUDux911r6m7haRef0WH.jpg', 'Christopher Nolan',      'Batman affronte le Joker, un criminel anarchiste qui sème la terreur à Gotham.',             5.0, '2022-12-01', NULL),
+  (680,    'Pulp Fiction',      1994, '/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg', 'Quentin Tarantino',      'Les histoires entrelacées de criminels et de gangsters à Los Angeles.',                     5.0, '2025-01-15', 'Le meilleur Tarantino.'),
+  (27205,  'Inception',         2010, '/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg', 'Christopher Nolan',      'Un voleur qui s''introduit dans les rêves se voit offrir une chance de rédemption.',         4.5, '2024-03-22', 'La toupie tourne encore dans ma tête.'),
+  (278,    'Les Évadés',        1994, '/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg', 'Frank Darabont',         'Deux hommes se lient d''amitié sur plusieurs années dans une prison.',                      5.0, '2023-11-05', 'Le meilleur film de tous les temps ?'),
+  (496243, 'Parasite',          2019, '/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg', 'Bong Joon-ho',           'Une famille pauvre s''infiltre progressivement dans la vie d''une famille riche.',            5.0, '2024-05-18', 'La cave m''a scotché.'),
+  (13,     'Forrest Gump',      1994, '/arw2vcBveWOVZr6pxd9XTd1TdQa.jpg', 'Robert Zemeckis',        'La vie extraordinaire d''un homme ordinaire du Sud des États-Unis.',                       4.0, '2024-10-22', NULL),
+  (19404,  'DDLJ',              1995, '/2CAL2433ZeIihfX1Hb2139CX0pW.jpg', 'Aditya Chopra',          'Deux Indiens de la diaspora tombent amoureux lors d''un voyage en Europe.',                  3.5, '2024-09-05', 'Premier Bollywood que je regarde !'),
+  (238,    'Le Parrain',        1972, '/3bhkrj58Vtu7enYsLegHnDmni6k.jpg', 'Francis Ford Coppola',   'Le patriarche d''une famille mafieuse transfère son empire à son fils réticent.',           4.5, '2024-07-01', NULL);

@@ -7,6 +7,7 @@ import com.yot.letterflop.service.MovieLogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,14 +36,13 @@ public class LogController {
             @Parameter(description = "Numéro de page (0-indexé)", example = "0") @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "Taille de page", example = "20") @RequestParam(defaultValue = "20") int size) {
 
-        List<MovieLogDto> logs = logService.getAllLogs(page, size);
-        int total = logService.getTotalCount();
+        Page<MovieLogDto> result = logService.getAllLogs(page, size);
 
         Map<String, Object> response = new HashMap<>();
-        response.put("content", logs);
-        response.put("totalElements", total);
-        response.put("totalPages", (int) Math.ceil((double) total / size));
-        response.put("currentPage", page);
+        response.put("content", result.getContent());
+        response.put("totalElements", result.getTotalElements());
+        response.put("totalPages", result.getTotalPages());
+        response.put("currentPage", result.getNumber());
 
         return ResponseEntity.ok(response);
     }
