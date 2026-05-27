@@ -1,0 +1,35 @@
+backend/src/main/java/com/yot/letterflop/repository/MovieLogRepository.java
+  s_a01855da583376::t_85fb2ceb271169 4-5,14
+backend/src/main/java/com/yot/letterflop/service/MovieLogService.java
+  h_0a88d9aba8622a 37,93
+  s_a01855da583376::t_db22dd422d0848 28-35
+  s_a01855da583376::t_86c54f3c2bd2f0 8-10,17-20,27,36,38,42-45,53-54,79,86,96-100
+db/init.sql
+  s_a01855da583376::t_35de14de878941 19-24
+  s_a01855da583376::t_ff1f109a6e0e0f 108-118
+  s_a01855da583376::t_47e4377b1f7190 97
+backend/src/main/java/com/yot/letterflop/controller/LogController.java
+  s_a01855da583376::t_2404b3156cd636 10
+  s_a01855da583376::t_b7c4b68dcd3c16 39,42-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "da205aeffb2acfabef154c3547ecefcc0f068fc0",
+  "prompts": {},
+  "humans": {
+    "h_0a88d9aba8622a": {
+      "author": "Yoan Thirion <yoan.thirion@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_a01855da583376": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e22daf52-7c52-4961-a425-ca4f0b9cffd0",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Yoan Thirion <yoan.thirion@gmail.com>"
+    }
+  }
+}
