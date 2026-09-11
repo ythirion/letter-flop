@@ -1,6 +1,6 @@
 # Letterflop — Application de démonstration RGESN
 
-> Application intentionnellement **non optimisée** pour illustrer les critères du [RGESN](https://www.rgesn.fr/) lors d'un cours sur l'écoconception des services numériques.
+> Application intentionnellement **non optimisée** pour illustrer les critères du [RGESN](https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/) lors d'un cours sur l'écoconception des services numériques.
 
 ## Stack technique
 
